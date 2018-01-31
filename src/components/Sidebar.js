@@ -37,9 +37,7 @@ class Sidebar extends Component{
 		return (
 			<div className="sidebar">
 				<h2>All decks</h2>
-				<button onClick = {e=>this.props.showAddDeck()  }>
-					New Deck
-				</button>
+				
 				<ul>
 					{props.decks.map((deck,i)=>
 						<li key={i} onClick={this.refresh} >

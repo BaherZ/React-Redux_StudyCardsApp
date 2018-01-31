@@ -23,10 +23,14 @@ class Cards extends Component{
 	}
 	render(){
 		return (
-			<div>{this.props.match.params.deckId}</div>
+			<div>{this.props.match.params.deckId}{this.props.children}</div>
 		)
 	}
 }
 export default withRouter(connect(mapStateToProps, null, null, {
   pure: false
 })(Cards));
+
+/*const Cards = ({children})=>{
+	return (<div>Deck will display{children}</div>)
+}*/

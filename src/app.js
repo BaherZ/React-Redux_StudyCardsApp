@@ -15,6 +15,7 @@ reducers.routing = routerReducer;
 import App from './components/App'
 import Sidebar from './components/Sidebar';
 import VisibleCards from './components/VisibleCards';
+import NewCardModal from './components/NewCardModal';
 
 import { Grid } from 'semantic-ui-react'
 
@@ -44,6 +45,9 @@ function run(){
 				    </div>
 				    <div className="VisibleCards">
 				    	<Route path='/deck/:deckId' component={VisibleCards}/>
+				    </div>
+				    <div className="VisibleCards">
+				    	<Route path='/deck/:deckId/new' component={NewCardModal}/>
 				    </div>
 				</div>
 				
