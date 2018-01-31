@@ -18,10 +18,10 @@ import VisibleCards from './components/VisibleCards';
 
 import { Grid } from 'semantic-ui-react'
 
-
+import * as localStore from './localStore';
 //console.log(VisibleCards)
 //STORE
-const store = createStore(combineReducers(reducers));
+const store = createStore(combineReducers(reducers),localStore.get());
 const history = syncHistoryWithStore(createBrowserHistory(), store);
 console.log("history is");
 console.log(history)
@@ -31,6 +31,7 @@ console.log(history)
 
 function run(){
 	let state = store.getState();
+	localStore.set(state,['decks','cards']);
 	console.log(state);
 	ReactDOM.render(
 		<Provider store={store}>
