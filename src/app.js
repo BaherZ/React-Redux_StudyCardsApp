@@ -1,27 +1,54 @@
-
-import {combineReducers,createStore} from 'redux';
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom'
-import {addDeck,showAddDeck,hideAddDeck} from './actions'
-import * as reducers from './reducers';
-import App from './components/App'
-import Sidebar from './components/Sidebar'
+import {combineReducers,createStore} from 'redux';
+import {Provider} from 'react-redux'
 
+import { createBrowserHistory } from 'history';
+
+import { withRouter } from 'react-router';
+import {Router,Route,browserHistory,Switch} from 'react-router';
+import {syncHistoryWithStore,routerReducer} from 'react-router-redux';
+
+import * as reducers from './reducers';
+reducers.routing = routerReducer;
+
+import App from './components/App'
+import Sidebar from './components/Sidebar';
+import VisibleCards from './components/VisibleCards';
+
+import { Grid } from 'semantic-ui-react'
+
+
+//console.log(VisibleCards)
 //STORE
 const store = createStore(combineReducers(reducers));
+const history = syncHistoryWithStore(createBrowserHistory(), store);
+console.log("history is");
+console.log(history)
+/*render={(routeProps)=>
+				    		(<VisibleCards{...routeProps}/>)
+				    	}*/
 
 function run(){
 	let state = store.getState();
 	console.log(state);
-	ReactDOM.render(<App>
-		<Sidebar 
-		decks={state.decks} 
-		addingDeck={state.addingDeck}
-		addDeck = {name=>store.dispatch(addDeck(name))}
-		showAddDeck = {()=>store.dispatch(showAddDeck())}
-		hideAddDeck = {()=>store.dispatch(hideAddDeck())}
-		/> 
-		</App>,document.getElementById('root'));
+	ReactDOM.render(
+		<Provider store={store}>
+			<Router history={history}>
+				<div className="holder">
+				  
+
+				   	<div className="sidebar">
+				    	<Route path='/' component={App}/>
+				    </div>
+				    <div className="VisibleCards">
+				    	<Route path='/deck/:deckId' component={VisibleCards}/>
+				    </div>
+				</div>
+				
+				
+			</Router>		
+		</Provider>,document.getElementById('root'));
 }
 run();
 store.subscribe(run)
